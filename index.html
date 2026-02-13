@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine Wish Link</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: linear-gradient(to bottom, #ff9a9e, #fecfef); padding: 50px; }
+        .link { display: inline-block; padding: 15px 30px; background: #ff69b4; color: white; text-decoration: none; border-radius: 25px; font-size: 18px; box-shadow: 0 4px 15px rgba(255,105,180,0.5); }
+        .link:hover { background: #ff1493; transform: scale(1.05); }
+        /* Modal Styles */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); }
+        .modal-content { background: white; margin: 15% auto; padding: 30px; border-radius: 15px; width: 80%; max-width: 500px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); position: relative; animation: fadeIn 0.3s; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: scale(1); } }
+        .hearts { font-size: 2em; color: #ff69b4; animation: heartbeat 1s infinite; }
+        @keyframes heartbeat { 0% { transform: scale(1); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .close:hover { color: #ff69b4; }
+        .wish-text { font-size: 20px; color: #333; margin: 20px 0; line-height: 1.5; }
+        button { padding: 10px 20px; margin: 10px; border: none; border-radius: 10px; cursor: pointer; font-size: 16px; }
+        #yesBtn { background: #ff69b4; color: white; }
+        #noBtn { background: #ccc; color: #666; }
+        #yesBtn:hover { background: #ff1493; }
+        #noBtn:hover { background: #bbb; }
+        canvas { position: fixed; top: 0; left: 0; pointer-events: none; z-index: 999; }
+    </style>
+</head>
+<body>
+    <h1>💕 Special Valentine Surprise from your loving Wife💕</h1>
+    <a href="#" id="wishLink" class="link">Open Valentine Wish from Lakshmi 🎁</a>
+
+    <!-- Interactive Modal -->
+    <div id="wishModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Will you accept my Valentine wish my dear husband Ravikiran? 💖</h2>
+            <button id="yesBtn">Yes 😍</button>
+            <button id="noBtn">No 🙅‍♀️</button>
+            <div id="yesMessage" style="display: none;">
+                <div class="hearts">💕💖💕</div>
+                <div class="wish-text">
+                    ನನ್ನ ಪ್ರಿಯ Ravikiran❤️, 
+                                            ನಿನ್ನ ಕಣ್ಣುಗಳಲ್ಲಿ ನನ್ನ ಜಗತ್ತು, ನಿನ್ನ ಹೃದಯದಲ್ಲಿ ನನ್ನ ಮನೆ.
+                                         ನೀ ಇದ್ದ ಕ್ಷಣ, ನನ್ನ ಜೀವನ ಸುಂದರವಾಗಿ ಮತ್ತೊಮ್ಮೆ ಹೂವಾಗುತ್ತದೆ. 🌸
+                              ನಿನ್ನ ಪ್ರೀತಿಯ ತುಂಬು ಮಳೆಯಲ್ಲಿ ನಗುತ್ತಾ, ನನ್ನ ಹೃದಯದ ಎಲ್ಲಾ ಕ್ಷಣಗಳು ನಿನ್ನ ಹೆಸರಿನ ಗೀತೆಯಾಗುತ್ತವೆ.
+                                       ನಿನ್ನ ಕೈಯ ಹಿಡಿದು ನಡೆಯುವ ಪ್ರತಿ ಕ್ಷಣ ನನ್ನ ಜೀವನದ ಅಮೂಲ್ಯ ರತ್ನ.
+                                             ❤️💑HAPPY VALENTINE'S DAY DEAR HUSBAND 💑❤️
+❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <canvas id="confetti"></canvas>
+
+
+
+    <script>
+        const link = document.getElementById('wishLink');
+        const modal = document.getElementById('wishModal');
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const yesMessage = document.getElementById('yesMessage');
+        const close = document.getElementsByClassName('close')[0];
+        const canvas = document.getElementById('confetti');
+
+        // Open modal on link click
+        link.onclick = function(e) {
+            e.preventDefault();
+            modal.style.display = 'block';
+        };
+
+        // Close modal
+        close.onclick = function() {
+            modal.style.display = 'none';
+            yesMessage.style.display = 'none';
+        };
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+                yesMessage.style.display = 'none';
+            }
+        };
+
+        // No button: just close
+        noBtn.onclick = function() {
+            modal.style.display = 'none';
+        };
+
+        // Yes button: show wish + confetti
+        yesBtn.onclick = function() {
+            yesMessage.style.display = 'block';
+            noBtn.style.display = 'none'; // Hide No after Yes
+            createConfetti();
+        };
+
+        // Simple confetti
+        function createConfetti() {
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const pieces = [];
+            for (let i = 0; i < 100; i++) {
+                pieces.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    vx: (Math.random() - 0.5) * 10,
+                    vy: Math.random() * 5 + 5,
+                    color: `hsl(${Math.random()*360}, 100%, 50%)`,
+                    size: Math.random() * 5 + 5
+                });
+            }
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                pieces.forEach(p => {
+                    p.x += p.vx;
+                    p.y += p.vy;
+                    p.vy += 0.1;
+                    ctx.fillStyle = p.color;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                if (pieces.some(p => p.y < canvas.height)) requestAnimationFrame(animate);
+            }
+            animate();
+        }
+    </script>
+</body>
+</html>
